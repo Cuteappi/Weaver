@@ -23,6 +23,16 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
+    margin: 0;
+    width: 100%;
+    /* Ensure pages fill at least the viewport height */
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
   }
 
   .using-mouse * {

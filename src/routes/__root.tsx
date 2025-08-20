@@ -90,9 +90,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
 			<head>
+				<script src="https://unpkg.com/react-scan/dist/auto.global.js"></script>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="min-h-[100svh] flex flex-col">
 				{children}
 				<Scripts />
 			</body>
