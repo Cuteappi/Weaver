@@ -1,11 +1,11 @@
 import {
 	Outlet,
+	HeadContent,
 	createRootRouteWithContext,
 	useRouteContext,
+	Scripts,
 } from '@tanstack/react-router'
 import {
-	Meta,
-	Scripts,
 	createServerFn,
 } from '@tanstack/react-start'
 import { QueryClient } from '@tanstack/react-query'
@@ -17,6 +17,7 @@ import { getCookie, getWebRequest } from '@tanstack/react-start/server'
 import { ConvexBetterAuthProvider } from '@convex-dev/better-auth/react'
 import { fetchSession, getCookieName } from '@/lib/server-auth-utils'
 import { authClient } from '@/lib/auth-client'
+import { ThemeRoot } from '@/components/ThemeRoot'
 
 // Server side session request
 const fetchAuth = createServerFn({ method: 'GET' }).handler(async () => {
@@ -75,7 +76,9 @@ function RootComponent() {
 			authClient={authClient}
 		>
 			<RootDocument>
-				<Outlet />
+				<ThemeRoot>
+					<Outlet />
+				</ThemeRoot>
 			</RootDocument>
 		</ConvexBetterAuthProvider>
 	)
@@ -83,11 +86,11 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className="dark">
+		<html lang="en">
 			<head>
-				<Meta />
+				<HeadContent />
 			</head>
-			<body className="bg-neutral-950 text-neutral-50">
+			<body>
 				{children}
 				<Scripts />
 			</body>
