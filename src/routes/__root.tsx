@@ -20,7 +20,19 @@ import { authClient } from '@/lib/auth-client'
 import { ThemeRoot } from '@/components/ThemeRoot'
 
 // Server side session request
+
 const fetchAuth = createServerFn({ method: 'GET' }).handler(async () => {
+	// Prefer WorkOS AuthKit session if present
+	const { getSessionFromCookie } = await import('@/authkit/ssr/session')
+	const workos = await getSessionFromCookie()
+	if (workos?.accessToken) {
+		return {
+			userId: workos.user.id,
+			token: workos.accessToken,
+		}
+	}
+
+	// Fallback to Better Auth session
 	const sessionCookieName = await getCookieName()
 	const token = getCookie(sessionCookieName)
 	const request = getWebRequest()
@@ -72,6 +84,14 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
 	const context = useRouteContext({ from: Route.id })
+
+	// On the client, set the Convex auth token via server function fetcher
+	React.useEffect(() => {
+		context.convexClient.setAuth(async () => {
+			const { token } = await fetchAuth()
+			return token ?? null
+		})
+	}, [context.convexClient])
 	return (
 		<ConvexBetterAuthProvider
 			client={context.convexClient}
