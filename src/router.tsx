@@ -4,13 +4,17 @@ import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { ConvexQueryClient } from '@convex-dev/react-query'
 import { ConvexProvider } from 'convex/react'
 import { routeTree } from './routeTree.gen'
+import { ConvexReactClient } from 'convex/react'
 
 export function createRouter() {
 	const CONVEX_URL = (import.meta as any).env.VITE_CONVEX_URL!
 	if (!CONVEX_URL) {
 		console.error('missing envar CONVEX_URL')
 	}
-	const convexQueryClient = new ConvexQueryClient(CONVEX_URL)
+	const convex = new ConvexReactClient(CONVEX_URL, {
+		unsavedChangesWarning: false,
+	})
+	const convexQueryClient = new ConvexQueryClient(convex)
 
 	const queryClient: QueryClient = new QueryClient({
 		defaultOptions: {
@@ -27,8 +31,8 @@ export function createRouter() {
 		createTanStackRouter({
 			routeTree,
 			defaultPreload: 'intent',
-			context: { queryClient },
 			scrollRestoration: true,
+			context: { queryClient, convexClient: convex, convexQueryClient },
 			defaultPreloadStaleTime: 0, // Let React Query handle all caching
 			defaultErrorComponent: (err) => <p>{err.error.stack}</p>,
 			defaultNotFoundComponent: () => <p>not found</p>,
