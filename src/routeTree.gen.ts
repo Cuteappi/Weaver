@@ -11,12 +11,24 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ChatRouteImport } from './routes/chat'
 import { Route as AnotherPageRouteImport } from './routes/anotherPage'
 import { Route as IndexRouteImport } from './routes/index'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
 const rootServerRouteImport = createServerRootRoute()
 
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AnotherPageRoute = AnotherPageRouteImport.update({
   id: '/anotherPage',
   path: '/anotherPage',
@@ -36,27 +48,35 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/anotherPage': typeof AnotherPageRoute
+  '/chat': typeof ChatRoute
+  '/pricing': typeof PricingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anotherPage': typeof AnotherPageRoute
+  '/chat': typeof ChatRoute
+  '/pricing': typeof PricingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/anotherPage': typeof AnotherPageRoute
+  '/chat': typeof ChatRoute
+  '/pricing': typeof PricingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/anotherPage'
+  fullPaths: '/' | '/anotherPage' | '/chat' | '/pricing'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/anotherPage'
-  id: '__root__' | '/' | '/anotherPage'
+  to: '/' | '/anotherPage' | '/chat' | '/pricing'
+  id: '__root__' | '/' | '/anotherPage' | '/chat' | '/pricing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnotherPageRoute: typeof AnotherPageRoute
+  ChatRoute: typeof ChatRoute
+  PricingRoute: typeof PricingRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -82,6 +102,20 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/anotherPage': {
       id: '/anotherPage'
       path: '/anotherPage'
@@ -113,6 +147,8 @@ declare module '@tanstack/react-start/server' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnotherPageRoute: AnotherPageRoute,
+  ChatRoute: ChatRoute,
+  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

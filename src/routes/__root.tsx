@@ -37,6 +37,7 @@ export const Route = createRootRouteWithContext<{
 	convexQueryClient: ConvexQueryClient
 }>()({
 	head: () => ({
+		title: 'Weaver',
 		meta: [
 			{
 				charSet: 'utf-8',
@@ -49,6 +50,7 @@ export const Route = createRootRouteWithContext<{
 		links: [
 			{ rel: 'stylesheet', href: appCss },
 			{ rel: 'icon', href: '/favicon.ico' },
+			{ rel: 'manifest', href: '/site.webmanifest' },
 		],
 	}),
 	beforeLoad: async (ctx) => {
