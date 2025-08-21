@@ -1,32 +1,29 @@
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { defineConfig } from 'vite'
-import tsConfigPaths from 'vite-tsconfig-paths'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import path from "path";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
+// https://vite.dev/config/
 export default defineConfig({
 	server: {
 		port: 3000,
 	},
 	plugins: [
-		tailwindcss(),
-		tsConfigPaths({
-			projects: ['./tsconfig.json'],
+		tanstackRouter({
+			target: 'react',
+			autoCodeSplitting: true,
 		}),
-		// react({
-		// 	babel: {
-		// 		plugins: ['babel-plugin-react-compiler'],
-		// 	},
-		// 	// Only run on TSX/JSX files
-		// 	include: [/\.([tj]sx)$/],
-		// 	// Exclude routes/server and any CSS (with or without query)
-		// 	exclude: [
-		// 		/src\/routes\//,
-		// 		/\.server\./,
-		// 		/\bapi\b/,
-		// 		/\.css(\?|$)/,
-		// 	],
-		// }),
-		tanstackStart(),
+		react({
+			babel: {
+				plugins: ['babel-plugin-react-compiler'],
+			},
+		}),
+		tailwindcss(),
 	],
-})
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "./src"),
+		},
+	},
+});

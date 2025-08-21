@@ -1,12 +1,22 @@
-export default {
+const clientId = process.env.WORKOS_CLIENT_ID;
+
+const authConfig = {
 	providers: [
 		{
-			// Your Convex site URL is provided in a system
-			// environment variable
-			domain: process.env.CONVEX_SITE_URL,
-
-			// Application ID has to be "convex"
-			applicationID: "convex",
+			type: 'customJwt',
+			issuer: `https://api.workos.com/`,
+			algorithm: 'RS256',
+			jwks: `https://api.workos.com/sso/jwks/${clientId}`,
+			applicationID: clientId,
+		},
+		{
+			type: 'customJwt',
+			issuer: `https://api.workos.com/user_management/${clientId}`,
+			algorithm: 'RS256',
+			jwks: `https://api.workos.com/sso/jwks/${clientId}`,
+			applicationID: clientId,
 		},
 	],
-}
+};
+
+export default authConfig;

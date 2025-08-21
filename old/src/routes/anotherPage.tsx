@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { api } from '../../convex/_generated/api'
+import { api } from '../../../convex/_generated/api'
 import { useAction } from 'convex/react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { convexQuery } from '@convex-dev/react-query'
