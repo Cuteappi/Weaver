@@ -1,33 +1,47 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
-// The schema is entirely optional.
-// You can delete this file (schema.ts) and the
-// app will continue to work.
-// The schema provides more precise TypeScript types.
 export default defineSchema({
-	users: defineTable({
-		// Basic profile fields are optional; BetterAuth stores canonical metadata
-	}),
+    // Users — required for ownership of chat threads/messages
+    users: defineTable({
+        subscriptionTier: v.union(v.literal("free"), v.literal("pro"), v.literal("enterprise")),
+        subscriptionStatus: v.optional(v.union(v.literal("active"), v.literal("canceled"), v.literal("past_due"))),
+        subscriptionId: v.optional(v.string()),
+        customerId: v.optional(v.string()),
+        subscriptionEndsAt: v.optional(v.number()),
+        createdAt: v.number(),
+        updatedAt: v.number(),
+    })
+        .index("by_subscriptionTier", ["subscriptionTier"])
+        .index("by_customerId", ["customerId"]),
 
-	threads: defineTable({
-		ownerId: v.id("users"),
-		title: v.string(),
-		model: v.optional(v.string()),
-		archived: v.optional(v.boolean()),
-		lastMessageAt: v.optional(v.number()),
-	})
-		.index("by_ownerId", ["ownerId"])
-		.index("by_ownerId_and_lastMessageAt", ["ownerId", "lastMessageAt"]),
+    // Chat threads (standalone chat)
+    chatThreads: defineTable({
+        userId: v.id("users"),
+        title: v.string(),
+        status: v.union(v.literal("draft"), v.literal("active"), v.literal("archived")),
+        createdAt: v.number(),
+        updatedAt: v.number(),
+    })
+        .index("by_ownerId_and_updatedAt", ["userId", "updatedAt"]),
 
-	messages: defineTable({
-		threadId: v.id("threads"),
-		authorId: v.optional(v.id("users")),
-		role: v.union(v.literal("user"), v.literal("assistant")),
-		content: v.string(),
-	}).index("by_threadId", ["threadId"]),
+    // Messages inside chat threads
+    chatMessages: defineTable({
+        threadId: v.id("chatThreads"),
+        role: v.union(v.literal("user"), v.literal("assistant"), v.literal("system")),
+        content: v.string(),
+        model: v.optional(v.string()),
+        status: v.optional(v.union(v.literal("streaming"), v.literal("final"))),
+        createdAt: v.number(),
+    })
+        .index("by_threadId_and_createdAt", ["threadId", "createdAt"]),
 
-	numbers: defineTable({
-		value: v.number(),
-	}),
+    // Per-user state (pointer to the users stlst state as yo what they had open in the app)
+    userState: defineTable({
+        userId: v.id("users"),
+        draftThreadId: v.optional(v.id("chatThreads")),
+        createdAt: v.number(),
+        updatedAt: v.number(),
+    })
+        .index("by_userId", ["userId"]),
 });

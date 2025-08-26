@@ -12,7 +12,7 @@ export default defineConfig({
 	plugins: [
 		tanstackRouter({
 			target: 'react',
-			autoCodeSplitting: true,
+			autoCodeSplitting: false,
 		}),
 		react({
 			babel: {
@@ -24,6 +24,8 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
+			"$": path.resolve(__dirname, "./src/components"),
+			"@@": path.resolve(__dirname, "./convex"),
 		},
 	},
 });

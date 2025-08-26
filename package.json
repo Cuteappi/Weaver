@@ -16,10 +16,19 @@
 		"@convex-dev/workos": "^0.0.1",
 		"@tanstack/react-router": "^1.131.27",
 		"@tanstack/react-router-devtools": "^1.131.27",
+		"@tanstack/react-virtual": "^3.13.12",
+		"@tiptap/extension-placeholder": "^3.2.0",
+		"@tiptap/react": "^3.2.0",
+		"@tiptap/starter-kit": "^3.2.0",
+		"@toml-tools/parser": "^1.0.0",
 		"@workos-inc/authkit-react": "^0.11.0",
+		"@xyflow/react": "^12.8.4",
 		"convex": "^1.23.0",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"lucide-react": "^0.540.0",
+		"react": "^0.0.0-experimental-6de32a5a-20250822",
+		"react-dom": "^0.0.0-experimental-6de32a5a-20250822",
+		"react-mosaic-component": "^6.1.1",
+		"zustand": "^5.0.8"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.21.0",
@@ -31,6 +40,7 @@
 		"@vitejs/plugin-react": "^4.3.4",
 		"babel-plugin-react-compiler": "^19.1.0-rc.2",
 		"eslint": "^9.21.0",
+		"eslint-plugin-react-compiler": "^19.1.0-rc.2",
 		"eslint-plugin-react-hooks": "^5.1.0",
 		"eslint-plugin-react-refresh": "^0.4.19",
 		"globals": "^15.15.0",
@@ -39,5 +49,9 @@
 		"typescript": "~5.7.2",
 		"typescript-eslint": "^8.24.1",
 		"vite": "^6.2.0"
-	}
+	},
+	"trustedDependencies": [
+		"@tailwindcss/oxide",
+		"esbuild"
+	]
 }

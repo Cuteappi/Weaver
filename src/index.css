@@ -1,22 +1,293 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@theme {
-  --color-light: #ffffff;
-  --color-dark: #171717;
+/* React Flow styles */
+@import '@xyflow/react/dist/style.css';
+
+/* React Mosaic styles */
+/* Removed to avoid bundling mosaic styles while chat-first UI is default */
+
+/* Dark Mode Color Palette (OKLCH) */
+:root {
+    /* Backgrounds (neutral, no chroma) */
+    --bg-primary: oklch(0.14 0 0);
+    --bg-secondary: oklch(0.18 0 0);
+    --bg-tertiary: oklch(0.22 0 0);
+    --bg-quaternary: oklch(0.26 0 0);
+
+    /* Surfaces */
+    --surface-primary: oklch(0.20 0 0);
+    --surface-secondary: oklch(0.24 0 0);
+    --surface-tertiary: oklch(0.30 0 0);
+    --surface-hover: oklch(0.36 0 0);
+
+    /* Text */
+    --text-primary: oklch(0.97 0 0);
+    --text-secondary: oklch(0.85 0 0);
+    --text-tertiary: oklch(0.70 0 0);
+    --text-muted: oklch(0.62 0 0);
+    --text-disabled: oklch(0.50 0 0);
+
+    /* Borders */
+    --border-primary: oklch(0.35 0 0);
+    --border-secondary: oklch(0.42 0 0);
+    --border-tertiary: oklch(0.52 0 0);
+
+    /* Accent (Yellow) */
+    --accent-yellow: oklch(0.85 0.18 95);
+    --accent-yellow-hover: oklch(0.82 0.20 95);
+    --accent-yellow-dark: oklch(0.74 0.18 95);
+
+    /* Back-compat accent aliases (map all previous accents to yellow) */
+    --accent-purple: var(--accent-yellow);
+    --accent-purple-hover: var(--accent-yellow-hover);
+    --accent-purple-dark: var(--accent-yellow-dark);
+    --accent-blue: var(--accent-yellow);
+    --accent-blue-hover: var(--accent-yellow-hover);
+    --accent-blue-dark: var(--accent-yellow-dark);
+    --accent-emerald: var(--accent-yellow);
+    --accent-emerald-hover: var(--accent-yellow-hover);
+    --accent-emerald-dark: var(--accent-yellow-dark);
+    --accent-orange: var(--accent-yellow);
+    --accent-orange-hover: var(--accent-yellow-hover);
+    --accent-orange-dark: var(--accent-yellow-dark);
+    --accent-red: var(--accent-yellow);
+    --accent-red-hover: var(--accent-yellow-hover);
+    --accent-red-dark: var(--accent-yellow-dark);
+
+    /* Special */
+    --gradient-primary: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-yellow-dark) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-yellow-hover) 100%);
+    --shadow-primary: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-secondary: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+    /* Legacy */
+    --color-light: var(--text-primary);
+    --color-dark: var(--bg-primary);
+
+    /* Aliases for existing components */
+    --border: var(--border-primary);
+    --card: var(--surface-primary);
+    --card-foreground: var(--text-primary);
+    --muted: var(--text-muted);
+    --muted-foreground: var(--text-tertiary);
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+    --primary: var(--accent-yellow);
+    --primary-foreground: oklch(0.16 0 0);
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    color: var(--color-light);
-    background: var(--color-dark);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+/* Global Dark Mode Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Subtle layered dark gradient using OKLCH */
+    background:
+      radial-gradient(1000px 600px at 10% -10%, oklch(0.85 0.18 95 / 0.06), transparent),
+      radial-gradient(900px 500px at 90% 0%, oklch(0.85 0.18 95 / 0.04), transparent),
+      linear-gradient(180deg, oklch(0.12 0 0) 0%, oklch(0.10 0 0) 100%);
+    color: var(--text-primary);
 }
 
-@media (prefers-color-scheme: light) {
-  body {
-    color: var(--color-dark);
-    background: var(--color-light);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+/* Dark Mode Mosaic Overrides */
+.mosaic-blueprint-theme {
+    font-family: inherit;
+    background-color: var(--bg-primary);
 }
+
+.mosaic-blueprint-theme .mosaic-window-toolbar {
+    background: var(--surface-secondary);
+    border-bottom: 1px solid var(--border-primary);
+    height: auto;
+    min-height: 30px;
+}
+
+.mosaic-blueprint-theme .mosaic-window-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.mosaic-blueprint-theme .mosaic-window-controls {
+    height: 30px;
+}
+
+.mosaic-blueprint-theme .mosaic-window-body {
+    background-color: var(--bg-secondary);
+}
+
+.mosaic-blueprint-theme .mosaic-tile {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+}
+
+.mosaic-blueprint-theme .mosaic-drop-target {
+    background-color: var(--accent-purple);
+    border: 2px dashed var(--accent-purple-hover);
+}
+
+/* Dark Mode Tiptap Editor */
+.ProseMirror {
+    outline: none;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 12px;
+    border: 1px solid var(--border-primary);
+}
+
+.ProseMirror:focus {
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-yellow) 20%, transparent);
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: var(--text-muted);
+    pointer-events: none;
+    height: 0;
+}
+
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3, .ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
+    color: var(--text-primary);
+}
+
+.ProseMirror strong {
+    color: var(--text-primary);
+}
+
+.ProseMirror code {
+    background-color: var(--surface-tertiary);
+    color: var(--accent-emerald);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.ProseMirror pre {
+    background-color: var(--surface-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: 6px;
+    padding: 12px;
+    overflow-x: auto;
+}
+
+/* Dark Mode Scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--surface-secondary);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--surface-tertiary);
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--surface-hover);
+}
+
+/* Dark Mode React Flow */
+.react-flow__node {
+    font-family: inherit;
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-primary);
+}
+
+.react-flow__node:hover {
+    border-color: var(--accent-yellow);
+}
+
+.react-flow__node.selected {
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-yellow) 30%, transparent);
+}
+
+.react-flow__handle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid var(--surface-secondary);
+    background-color: var(--accent-yellow);
+}
+
+.react-flow__handle-connecting {
+    background: var(--accent-yellow);
+}
+
+.react-flow__handle:hover {
+    background-color: var(--accent-yellow-hover);
+}
+
+.react-flow__edge-path {
+    stroke: var(--accent-yellow);
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+    stroke: var(--accent-yellow);
+}
+
+.react-flow__controls {
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-primary);
+}
+
+.react-flow__controls button {
+    background-color: var(--surface-secondary);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-primary);
+}
+
+.react-flow__controls button:hover {
+    background-color: var(--surface-hover);
+}
+
+.react-flow__minimap {
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--border-primary);
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Utility Classes for Dark Mode */
+.bg-app-primary { background-color: var(--bg-primary); }
+.bg-app-secondary { background-color: var(--bg-secondary); }
+.bg-app-tertiary { background-color: var(--bg-tertiary); }
+.bg-surface-primary { background-color: var(--surface-primary); }
+.bg-surface-secondary { background-color: var(--surface-secondary); }
+.bg-surface-tertiary { background-color: var(--surface-tertiary); }
+
+.text-app-primary { color: var(--text-primary); }
+.text-app-secondary { color: var(--text-secondary); }
+.text-app-tertiary { color: var(--text-tertiary); }
+.text-app-muted { color: var(--text-muted); }
+
+.border-app-primary { border-color: var(--border-primary); }
+.border-app-secondary { border-color: var(--border-secondary); }
+
+.accent-purple { color: var(--accent-purple); }
+.accent-blue { color: var(--accent-blue); }
+.accent-emerald { color: var(--accent-emerald); }
+.accent-orange { color: var(--accent-orange); }
+.accent-red { color: var(--accent-red); }

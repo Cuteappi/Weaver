@@ -21,18 +21,27 @@ declare module '@tanstack/react-router' {
 }
 
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
+const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined;
+const workosClientId = import.meta.env.VITE_WORKOS_CLIENT_ID as string | undefined;
+const workosRedirectUri = import.meta.env.VITE_WORKOS_REDIRECT_URI as string | undefined;
+
+const hasConvex = Boolean(convexUrl);
+const hasAuth = Boolean(workosClientId && workosRedirectUri);
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<AuthKitProvider
-			clientId={import.meta.env.VITE_WORKOS_CLIENT_ID}
-			redirectUri={import.meta.env.VITE_WORKOS_REDIRECT_URI}
-		>
-			<ConvexProviderWithAuthKit client={convex} useAuth={useAuth}>
+		{hasConvex && hasAuth ? (
+			<AuthKitProvider clientId={workosClientId as string} redirectUri={workosRedirectUri as string}>
+				<ConvexProviderWithAuthKit client={new ConvexReactClient(convexUrl as string)} useAuth={useAuth}>
+					<RouterProvider router={router} />
+					<TanStackRouterDevtools router={router} position="top-left" />
+				</ConvexProviderWithAuthKit>
+			</AuthKitProvider>
+		) : (
+			<>
 				<RouterProvider router={router} />
 				<TanStackRouterDevtools router={router} />
-			</ConvexProviderWithAuthKit>
-		</AuthKitProvider>
+			</>
+		)}
 	</StrictMode>,
 );
