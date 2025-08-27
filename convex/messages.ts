@@ -53,6 +53,7 @@ export const appendUserMessage = mutation({
 			model: args.model,
 			status: "final",
 			createdAt: now,
+			updatedAt: now,
 		});
 
 		await ctx.db.patch(thread._id, { updatedAt: now });

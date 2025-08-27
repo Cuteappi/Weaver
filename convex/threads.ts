@@ -24,7 +24,7 @@ export const listRecentThreads = query({
 		// NOTE: index is named by_ownerId_and_updatedAt but keys are (userId, updatedAt)
 		const rows = await ctx.db
 			.query("chatThreads")
-			.withIndex("by_ownerId_and_updatedAt", (q: any) => q.eq("userId", user._id))
+			.withIndex("by_userId_and_updatedAt", (q: any) => q.eq("userId", user._id))
 			.order("desc")
 			.take(args.limit ?? 20);
 		return rows;

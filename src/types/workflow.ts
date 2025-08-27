@@ -1,4 +1,6 @@
-import { Id } from "../../convex/_generated/dataModel";
+// Local Id type to decouple app types from Convex table constraints
+// This prevents TS errors when app tables differ from Convex schema.
+export type Id<T extends string = string> = string & { __table?: T };
 
 // Base node types
 export type NodeType = "chat" | "document" | "import" | "presentation";

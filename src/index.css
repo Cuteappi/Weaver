@@ -3,291 +3,125 @@
 /* React Flow styles */
 @import '@xyflow/react/dist/style.css';
 
-/* React Mosaic styles */
-/* Removed to avoid bundling mosaic styles while chat-first UI is default */
+@import "tw-animate-css";
 
-/* Dark Mode Color Palette (OKLCH) */
+@custom-variant dark (&:is(.dark *));
+
 :root {
-    /* Backgrounds (neutral, no chroma) */
-    --bg-primary: oklch(0.14 0 0);
-    --bg-secondary: oklch(0.18 0 0);
-    --bg-tertiary: oklch(0.22 0 0);
-    --bg-quaternary: oklch(0.26 0 0);
-
-    /* Surfaces */
-    --surface-primary: oklch(0.20 0 0);
-    --surface-secondary: oklch(0.24 0 0);
-    --surface-tertiary: oklch(0.30 0 0);
-    --surface-hover: oklch(0.36 0 0);
-
-    /* Text */
-    --text-primary: oklch(0.97 0 0);
-    --text-secondary: oklch(0.85 0 0);
-    --text-tertiary: oklch(0.70 0 0);
-    --text-muted: oklch(0.62 0 0);
-    --text-disabled: oklch(0.50 0 0);
-
-    /* Borders */
-    --border-primary: oklch(0.35 0 0);
-    --border-secondary: oklch(0.42 0 0);
-    --border-tertiary: oklch(0.52 0 0);
-
-    /* Accent (Yellow) */
-    --accent-yellow: oklch(0.85 0.18 95);
-    --accent-yellow-hover: oklch(0.82 0.20 95);
-    --accent-yellow-dark: oklch(0.74 0.18 95);
-
-    /* Back-compat accent aliases (map all previous accents to yellow) */
-    --accent-purple: var(--accent-yellow);
-    --accent-purple-hover: var(--accent-yellow-hover);
-    --accent-purple-dark: var(--accent-yellow-dark);
-    --accent-blue: var(--accent-yellow);
-    --accent-blue-hover: var(--accent-yellow-hover);
-    --accent-blue-dark: var(--accent-yellow-dark);
-    --accent-emerald: var(--accent-yellow);
-    --accent-emerald-hover: var(--accent-yellow-hover);
-    --accent-emerald-dark: var(--accent-yellow-dark);
-    --accent-orange: var(--accent-yellow);
-    --accent-orange-hover: var(--accent-yellow-hover);
-    --accent-orange-dark: var(--accent-yellow-dark);
-    --accent-red: var(--accent-yellow);
-    --accent-red-hover: var(--accent-yellow-hover);
-    --accent-red-dark: var(--accent-yellow-dark);
-
-    /* Special */
-    --gradient-primary: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-yellow-dark) 100%);
-    --gradient-secondary: linear-gradient(135deg, var(--accent-yellow) 0%, var(--accent-yellow-hover) 100%);
-    --shadow-primary: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-    --shadow-secondary: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-
-    /* Legacy */
-    --color-light: var(--text-primary);
-    --color-dark: var(--bg-primary);
-
-    /* Aliases for existing components */
-    --border: var(--border-primary);
-    --card: var(--surface-primary);
-    --card-foreground: var(--text-primary);
-    --muted: var(--text-muted);
-    --muted-foreground: var(--text-tertiary);
-    --background: var(--bg-primary);
-    --foreground: var(--text-primary);
-    --primary: var(--accent-yellow);
-    --primary-foreground: oklch(0.16 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Global Dark Mode Styles */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    /* Subtle layered dark gradient using OKLCH */
-    background:
-      radial-gradient(1000px 600px at 10% -10%, oklch(0.85 0.18 95 / 0.06), transparent),
-      radial-gradient(900px 500px at 90% 0%, oklch(0.85 0.18 95 / 0.04), transparent),
-      linear-gradient(180deg, oklch(0.12 0 0) 0%, oklch(0.10 0 0) 100%);
-    color: var(--text-primary);
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
 }
 
-/* Dark Mode Mosaic Overrides */
-.mosaic-blueprint-theme {
-    font-family: inherit;
-    background-color: var(--bg-primary);
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-.mosaic-blueprint-theme .mosaic-window-toolbar {
-    background: var(--surface-secondary);
-    border-bottom: 1px solid var(--border-primary);
-    height: auto;
-    min-height: 30px;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
-
-.mosaic-blueprint-theme .mosaic-window-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
-}
-
-.mosaic-blueprint-theme .mosaic-window-controls {
-    height: 30px;
-}
-
-.mosaic-blueprint-theme .mosaic-window-body {
-    background-color: var(--bg-secondary);
-}
-
-.mosaic-blueprint-theme .mosaic-tile {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-primary);
-}
-
-.mosaic-blueprint-theme .mosaic-drop-target {
-    background-color: var(--accent-purple);
-    border: 2px dashed var(--accent-purple-hover);
-}
-
-/* Dark Mode Tiptap Editor */
-.ProseMirror {
-    outline: none;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-radius: 6px;
-    padding: 12px;
-    border: 1px solid var(--border-primary);
-}
-
-.ProseMirror:focus {
-    border-color: var(--accent-yellow);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-yellow) 20%, transparent);
-}
-
-.ProseMirror p.is-editor-empty:first-child::before {
-    content: attr(data-placeholder);
-    float: left;
-    color: var(--text-muted);
-    pointer-events: none;
-    height: 0;
-}
-
-.ProseMirror h1, .ProseMirror h2, .ProseMirror h3, .ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
-    color: var(--text-primary);
-}
-
-.ProseMirror strong {
-    color: var(--text-primary);
-}
-
-.ProseMirror code {
-    background-color: var(--surface-tertiary);
-    color: var(--accent-emerald);
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-
-.ProseMirror pre {
-    background-color: var(--surface-tertiary);
-    border: 1px solid var(--border-primary);
-    border-radius: 6px;
-    padding: 12px;
-    overflow-x: auto;
-}
-
-/* Dark Mode Scrollbars */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: var(--surface-secondary);
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--surface-tertiary);
-    border-radius: 3px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: var(--surface-hover);
-}
-
-/* Dark Mode React Flow */
-.react-flow__node {
-    font-family: inherit;
-    background-color: var(--surface-secondary);
-    border: 1px solid var(--border-primary);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-primary);
-}
-
-.react-flow__node:hover {
-    border-color: var(--accent-yellow);
-}
-
-.react-flow__node.selected {
-    border-color: var(--accent-yellow);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-yellow) 30%, transparent);
-}
-
-.react-flow__handle {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 2px solid var(--surface-secondary);
-    background-color: var(--accent-yellow);
-}
-
-.react-flow__handle-connecting {
-    background: var(--accent-yellow);
-}
-
-.react-flow__handle:hover {
-    background-color: var(--accent-yellow-hover);
-}
-
-.react-flow__edge-path {
-    stroke: var(--accent-yellow);
-}
-
-.react-flow__edge.selected .react-flow__edge-path {
-    stroke: var(--accent-yellow);
-}
-
-.react-flow__controls {
-    background-color: var(--surface-secondary);
-    border: 1px solid var(--border-primary);
-    box-shadow: var(--shadow-primary);
-}
-
-.react-flow__controls button {
-    background-color: var(--surface-secondary);
-    color: var(--text-primary);
-    border-bottom: 1px solid var(--border-primary);
-}
-
-.react-flow__controls button:hover {
-    background-color: var(--surface-hover);
-}
-
-.react-flow__minimap {
-    background-color: var(--surface-secondary);
-    border: 1px solid var(--border-primary);
-}
-
-/* Animation for loading states */
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Utility Classes for Dark Mode */
-.bg-app-primary { background-color: var(--bg-primary); }
-.bg-app-secondary { background-color: var(--bg-secondary); }
-.bg-app-tertiary { background-color: var(--bg-tertiary); }
-.bg-surface-primary { background-color: var(--surface-primary); }
-.bg-surface-secondary { background-color: var(--surface-secondary); }
-.bg-surface-tertiary { background-color: var(--surface-tertiary); }
-
-.text-app-primary { color: var(--text-primary); }
-.text-app-secondary { color: var(--text-secondary); }
-.text-app-tertiary { color: var(--text-tertiary); }
-.text-app-muted { color: var(--text-muted); }
-
-.border-app-primary { border-color: var(--border-primary); }
-.border-app-secondary { border-color: var(--border-secondary); }
-
-.accent-purple { color: var(--accent-purple); }
-.accent-blue { color: var(--accent-blue); }
-.accent-emerald { color: var(--accent-emerald); }
-.accent-orange { color: var(--accent-orange); }
-.accent-red { color: var(--accent-red); }
